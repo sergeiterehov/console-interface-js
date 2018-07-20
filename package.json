@@ -1,0 +1,20 @@
+{
+  "name": "console-interface-js",
+  "version": "1.0.0",
+  "description": "Console interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "cli"
+  ],
+  "author": "Sergei Terehov",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.5.2",
+    "typescript": "^2.9.2"
+  }
+}
