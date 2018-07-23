@@ -27,7 +27,13 @@ export class Visualizer {
         this.rules = rules;
     }
 
-    public render(object: ConsoleObject): string {
-        return object.content;
+    public render(object: ConsoleObject, parentRule: IViewRule): string {
+        const rule = this.mergeRule(parentRule, {});
+
+        return object.content + object.children.map((child) => this.render(child, rule)).join("");
+    }
+
+    private mergeRule(parent: IViewRule, child: IViewRule): IViewRule {
+        return {};
     }
 }

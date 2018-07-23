@@ -14,5 +14,5 @@ new TextElement(root).content = "Time: ";
 const time = new TextElement(root);
 
 setInterval(() => {
-    time.content = Date.now().toString();
+    time.content = (new Date()).toISOString();
 }, 500);

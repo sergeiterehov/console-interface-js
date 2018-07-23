@@ -1,14 +1,14 @@
 
 export class ConsoleObject {
-    public id?: string;
-    public classes: string[];
+    private identificator?: string;
+    private classes: string[];
 
     private parentNode?: ConsoleObject;
     private childrenNodes: ConsoleObject[];
     private internalContent: string;
 
     constructor(parent?: ConsoleObject, id?: string, classes?: string[]) {
-        this.id = id;
+        this.identificator = id;
         this.classes = classes ? classes.slice() : [];
         this.childrenNodes = [];
         this.internalContent = "";
@@ -40,11 +40,17 @@ export class ConsoleObject {
     }
 
     public set parent(parentNode: ConsoleObject|undefined) {
-        if (this.parentNode) {
-            this.parentNode.childrenNodes.splice(this.parentNode.childrenNodes.indexOf(this), 1);
+        const oldParent = this.parentNode;
+
+        if (oldParent) {
+            oldParent.childrenNodes.splice(oldParent.childrenNodes.indexOf(this), 1);
         }
 
         this.parentNode = parentNode;
+
+        if (oldParent) {
+            oldParent.handlerObjectChange();
+        }
 
         if (! parentNode) {
             return;
@@ -64,6 +70,56 @@ export class ConsoleObject {
     }
 
     public get content(): string {
+        return this.internalContent;
+    }
+
+    public get innerContent(): string {
         return this.internalContent + this.childrenNodes.map((object) => object.content).join("");
+    }
+
+    public set id(identificator: string|undefined) {
+        this.identificator = identificator;
+
+        this.handlerObjectChange();
+    }
+
+    public get id(): string|undefined {
+        return this.identificator;
+    }
+
+    public getClasses(): string[] {
+        return this.classes.slice();
+    }
+
+    public addClass(... names: string[]): ConsoleObject {
+        this.classes.push(... names);
+
+        this.handlerObjectChange();
+
+        return this;
+    }
+
+    public removeClass(... names: string[]): ConsoleObject {
+        names.forEach((name) => {
+            const index = this.classes.indexOf(name);
+
+            if (-1 === index) {
+                return;
+            }
+
+            this.classes.splice(index, 1);
+        });
+
+        this.handlerObjectChange();
+
+        return this;
+    }
+
+    public findById(id: string): ConsoleObject|undefined {
+        if (id === this.identificator) {
+            return this;
+        }
+
+        return this.childrenNodes.map((child) => child.findById(id))[0];
     }
 }

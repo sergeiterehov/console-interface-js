@@ -25,6 +25,6 @@ export class ConsoleRenderer extends ConsoleObject {
     }
 
     private render(object: ConsoleObject): string {
-        return this.visualizer.render(object);
+        return this.visualizer.render(object, {});
     }
 }
