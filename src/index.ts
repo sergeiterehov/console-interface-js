@@ -3,7 +3,7 @@ import { TextElement } from "./elements";
 
 new TextElement(root).content = "Time: ";
 const time = new TextElement(root);
-new TextElement(root).content = " Количество нажатий: ";
+new TextElement(root).content = "\nКоличество нажатий: ";
 const counter = new TextElement(root);
 
 let counterValue: number = 0;
