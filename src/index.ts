@@ -16,3 +16,7 @@ root.on("keypress", (key) => {
     counterValue += 1;
     counter.content = counterValue.toString();
 });
+
+root.on("exit", () => {
+    counter.content = "death";
+});

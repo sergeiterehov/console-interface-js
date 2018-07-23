@@ -139,7 +139,7 @@ export class ConsoleObject {
         return this;
     }
 
-    public trigger(name: string, data: any): ConsoleObject {
+    public trigger(name: string, data?: any): ConsoleObject {
         const list = this.listeners[name];
 
         if (list) {

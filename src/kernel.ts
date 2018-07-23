@@ -19,9 +19,10 @@ readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);
 
 process.stdin.on("keypress", (str, key) => {
+    root.trigger("keypress", key);
+
     if (key.ctrl && key.name === "c") {
+        root.trigger("exit");
         return process.exit();
     }
-
-    root.trigger("keypress", key);
 });
