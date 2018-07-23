@@ -7,11 +7,15 @@ export class ConsoleObject {
     private childrenNodes: ConsoleObject[];
     private internalContent: string;
 
+    private listeners: {[key: string]: Array<(data: any, event: string) => void>};
+
     constructor(parent?: ConsoleObject, id?: string, classes?: string[]) {
         this.identificator = id;
         this.classes = classes ? classes.slice() : [];
         this.childrenNodes = [];
         this.internalContent = "";
+
+        this.listeners = {};
 
         // Setters here
         this.parent = parent;
@@ -121,5 +125,27 @@ export class ConsoleObject {
         }
 
         return this.childrenNodes.map((child) => child.findById(id))[0];
+    }
+
+    public on(name: string, cb: (data: any, event: string) => void): ConsoleObject {
+        let list = this.listeners[name];
+
+        if (! list) {
+            list = [];
+            this.listeners[name] = list;
+        }
+
+        list.push(cb);
+        return this;
+    }
+
+    public trigger(name: string, data: any): ConsoleObject {
+        const list = this.listeners[name];
+
+        if (list) {
+            list.forEach((listener) => listener(data, name));
+        }
+
+        return this;
     }
 }

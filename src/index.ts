@@ -1,18 +1,18 @@
-import { ConsoleRenderer } from "./ConsoleRenderer";
-import { Visualizer } from "./Visualizer";
-import { TextElement, ContainerElement } from "./elements";
-
-const visualizer = new Visualizer({});
-const root = new ContainerElement();
-
-const renderer = new ConsoleRenderer(root, visualizer, (content) => {
-    process.stdout.write("\x1bc");
-    process.stdout.write(content);
-});
+import { root } from "./kernel";
+import { TextElement } from "./elements";
 
 new TextElement(root).content = "Time: ";
 const time = new TextElement(root);
+new TextElement(root).content = " Количество нажатий: ";
+const counter = new TextElement(root);
+
+let counterValue: number = 0;
 
 setInterval(() => {
     time.content = (new Date()).toISOString();
 }, 500);
+
+root.on("keypress", (key) => {
+    counterValue += 1;
+    counter.content = counterValue.toString();
+});
