@@ -1,3 +1,8 @@
+# Try the console... JS!
+
+This is lib for creating interactive console application. You can build objects structure like DOM and manage it (set classes, content and move an nodes).
+
+```js
 import { root } from "./kernel";
 import { TextElement } from "./elements";
 
@@ -20,3 +25,10 @@ root.on("keypress", (key) => {
 root.on("exit", () => {
     counter.content = "death";
 });
+
+```
+
+```
+Time: 2018-07-25T16:30:14.375Z
+Press counter: 42
+```
